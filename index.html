@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سامانه پایش خادمان رسانه‌ای و تولیدات مهدوی | نهضت امام زمانی‌ها</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- فونت وزیر متن (Vazirmatn) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            cream: {
+              50: '#FDFBF7',
+              100: '#F8F6F0',
+              200: '#F0ECE1',
+              300: '#E4DDD0',
+            },
+            mahdavi: {
+              dark: '#064E3B',
+              primary: '#0D5C3A',
+              light: '#10B981',
+              teal: '#0D9488',
+              cyan: '#06B6D4',
+              gold: '#D97706',
+              goldLight: '#FEF3C7',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: #F8F6F0;
+      color: #1E293B;
+      scroll-behavior: smooth;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F0ECE1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0D9488;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #065F46;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-200 selection:text-emerald-900 bg-cream-100">
+
+  <!-- ================= نوار بالایی و برندینگ مهدوی ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100/90 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        
+        <!-- عنوان و نماد معنوی -->
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-800 to-teal-700 flex items-center justify-center text-white shadow-md shadow-emerald-800/20 ring-2 ring-emerald-500/20">
+            <svg class="w-6 h-6 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-extrabold text-emerald-950 tracking-tight">نهضت رسانه‌ای امام زمانی‌ها</h1>
+              <span class="px-2 py-0.5 text-[11px] font-bold bg-emerald-100/80 text-emerald-800 border border-emerald-200 rounded-full">ویترین و پایش ۶۴ خادم فعال</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">زیست‌بوم رسانه‌ای هوش مصنوعی مهدوی (مدرسه سبب) • اتصال مستقیم مخزن گیت‌هاب</p>
+          </div>
+        </div>
+
+        <!-- ابزار جستجو و فیلتر سریع -->
+        <div class="flex items-center gap-2.5 w-full md:w-auto">
+          <div class="relative flex-1 md:w-80">
+            <input 
+              type="text" 
+              id="searchInput"
+              oninput="handleSearch(this.value)"
+              placeholder="جستجوی نام، شهر، مهارت، کد یا ابزار..." 
+              class="w-full pl-9 pr-10 py-2.5 text-xs sm:text-sm bg-cream-50 border border-emerald-200/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-600 transition-all placeholder:text-slate-400 text-slate-800"
+            >
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-emerald-700">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <button 
+              id="clearSearchBtn"
+              onclick="clearSearch()"
+              class="hidden absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 hover:text-slate-600"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= نوار آمار فشرده و تفکیک اعضا (تمرکز روی تمیزی صفحه) ================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
+    <div class="bg-white border border-emerald-100 rounded-3xl p-4 sm:p-5 shadow-sm">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        
+        <!-- کل ثبت‌نامی‌ها -->
+        <div class="flex items-center gap-3.5 p-3 sm:p-3.5 rounded-2xl bg-cream-50 border border-cream-200/70">
+          <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] text-slate-500 font-medium">کل ثبت‌نامی‌ها</div>
+            <div class="text-xl font-black text-slate-800">۲۶۷ <span class="text-xs font-normal text-slate-500">خادم</span></div>
+          </div>
+        </div>
+
+        <!-- فعالان و خروجی‌سازان (فوکوس صفحه اصلی) -->
+        <div class="flex items-center gap-3.5 p-3 sm:p-3.5 rounded-2xl bg-emerald-50/90 border border-emerald-300 ring-2 ring-emerald-500/20">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm shadow-emerald-700/30">
+            <svg class="w-5 h-5 text-amber-300" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] text-emerald-800 font-bold flex items-center gap-1.5">
+              <span>خادمان فعال و خروجی‌ساز</span>
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <div class="text-xl font-black text-emerald-950">۶۴ <span class="text-xs font-normal text-emerald-700">خادم پیشرو</span></div>
+          </div>
+        </div>
+
+        <!-- راکد و در انتظار اقدام (کلیک برای مشاهده جزئیات) -->
+        <div onclick="openIdleModal()" class="cursor-pointer group flex items-center gap-3.5 p-3 sm:p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 hover:bg-amber-100/70 transition-all">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 group-hover:bg-amber-200 flex items-center justify-center shrink-0 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="text-[11px] text-amber-800 font-medium flex items-center justify-between">
+              <span>در انتظار تعامل (وارم‌آپ)</span>
+              <span class="text-[10px] text-amber-600 underline">مشاهده</span>
+            </div>
+            <div class="text-xl font-black text-amber-950">۱۷۸ <span class="text-xs font-normal text-amber-700">نفر</span></div>
+          </div>
+        </div>
+
+        <!-- لغو عهدنامه و مرخصی (کلیک برای مشاهده جزئیات) -->
+        <div onclick="openArchivedModal()" class="cursor-pointer group flex items-center gap-3.5 p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-all">
+          <div class="w-10 h-10 rounded-xl bg-slate-200 text-slate-600 group-hover:bg-slate-300 flex items-center justify-center shrink-0 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="text-[11px] text-slate-600 font-medium flex items-center justify-between">
+              <span>مرخصی موقت و لغو عهد</span>
+              <span class="text-[10px] text-slate-500 underline">مشاهده</span>
+            </div>
+            <div class="text-xl font-black text-slate-700">۲۵ <span class="text-xs font-normal text-slate-500">نفر</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- نوار فیلتر سریع و هدایت به بخش‌ها -->
+      <div class="mt-4 pt-3.5 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-600 gap-2.5">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-bold text-slate-700">فیلتر سریع:</span>
+          <button onclick="filterByLevel('all')" id="btn-all" class="filter-btn px-3 py-1 rounded-xl font-bold bg-emerald-800 text-white transition">همه (۶۴)</button>
+          <button onclick="filterByLevel(3)" id="btn-lvl3" class="filter-btn px-3 py-1 rounded-xl font-medium bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 transition">🎬 راویان ظهور (۱۴)</button>
+          <button onclick="filterByLevel(2)" id="btn-lvl2" class="filter-btn px-3 py-1 rounded-xl font-medium bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100 transition">🎨 نگارگران عهد (۱۰)</button>
+          <button onclick="filterByLevel(1)" id="btn-lvl1" class="filter-btn px-3 py-1 rounded-xl font-medium bg-emerald-50 text-emerald-900 border border-emerald-200 hover:bg-emerald-100 transition">🌿 رهپویان سبب (۴۰)</button>
+        </div>
+        <div class="text-[11px] text-slate-400">
+          * کارت‌های کاربران بر اساس طراحی مینیمال و خوانا بدون تصویر پس‌زمینه چیده شده‌اند.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= بخش‌های اصلی صفحه (تک‌صفحه‌ای با اسکرول عمودی) ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-12">
+
+    <!-- ================= بخش ۱: مهدی‌یار سطح ۳ (راویان ظهور - سازندگان ویدئو) ================= -->
+    <section id="level3" class="scroll-mt-24">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 mb-6 border-b-2 border-amber-400 gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-500/25">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-black text-slate-900">مهدی‌یار سطح ۳ — راویان ظهور</h2>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">سازندگان اثر ویدیویی</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">خادمانی که حداقل ۱ اثر ویدیویی کامل، سکانس متحرک مهدوی یا کلیپ انیمیشن تولید و ثبت کرده‌اند.</p>
+          </div>
+        </div>
+        <div class="text-xs font-bold text-amber-900 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200 self-start sm:self-auto">
+          تعداد: <span id="count-level-3" class="text-sm font-black">۱۴</span> خادم برگزیده
+        </div>
+      </div>
+
+      <!-- شبکه کارت‌های بخش ۱ -->
+      <div id="grid-level-3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- کارت‌های پاک، تایپوگرافی‌محور و بدون عکس پس‌زمینه توسط جاوااسکریپت تزریق می‌شوند -->
+      </div>
+    </section>
+
+    <!-- ================= بخش ۲: مهدی‌یار سطح ۲ (نگارگران عهد - تصویرسازان) ================= -->
+    <section id="level2" class="scroll-mt-24">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 mb-6 border-b-2 border-teal-400 gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-600 to-emerald-700 text-white flex items-center justify-center shadow-md shadow-teal-700/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-black text-slate-900">مهدی‌یار سطح ۲ — نگارگران عهد</h2>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-900 border border-teal-300">خالقان تصویر و استوری‌بورد</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">خادمانی که شناسنامه کاراکتر، مجموعه تصاویر داستانی یا کلاژهای مهدوی را خلق کرده و در آستانه ویدئوسازی‌اند.</p>
+          </div>
+        </div>
+        <div class="text-xs font-bold text-teal-900 bg-teal-50 px-3 py-1.5 rounded-xl border border-teal-200 self-start sm:self-auto">
+          تعداد: <span id="count-level-2" class="text-sm font-black">۱۰</span> خادم نگارگر
+        </div>
+      </div>
+
+      <!-- شبکه کارت‌های بخش ۲ -->
+      <div id="grid-level-2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- ================= بخش ۳: مهدی‌یار سطح ۱ (رهپویان سبب - تعاملی و آموزشی) ================= -->
+    <section id="level1" class="scroll-mt-24">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 mb-6 border-b-2 border-emerald-400 gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-800 text-white flex items-center justify-center shadow-md shadow-emerald-700/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-black text-slate-900">مهدی‌یار سطح ۱ — رهپویان سبب</h2>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">همراهان تعاملی، آموزشی و ترویجی</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">خادمانی که در حال طی دوره‌های آموزشی، انتخاب سناریو از بانک داستان، تدریس به نوجوانان یا حل گره‌های فنی هستند.</p>
+          </div>
+        </div>
+        <div class="text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 self-start sm:self-auto">
+          تعداد: <span id="count-level-1" class="text-sm font-black">۴۰</span> خادم کوشا
+        </div>
+      </div>
+
+      <!-- شبکه کارت‌های بخش ۳ -->
+      <div id="grid-level-1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- پیام در صورت عدم تطابق جستجو -->
+    <div id="no-results" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-300">
+      <svg class="w-12 h-12 text-slate-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div class="text-base font-bold text-slate-800">هیچ خادمی با این مشخصات یافت نشد!</div>
+      <p class="text-xs text-slate-500 mt-1">می‌توانید عبارت جستجو را ویرایش کنید یا فیلتر را پاک کنید.</p>
+      <button onclick="clearSearch()" class="mt-4 px-4 py-2 text-xs font-bold bg-emerald-700 text-white rounded-xl hover:bg-emerald-800 transition">پاک کردن فیلتر</button>
+    </div>
+
+  </main>
+
+  <!-- ================= فوتر داشبورد ================= -->
+  <footer class="bg-white border-t border-emerald-100 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div>
+        <span class="font-extrabold text-emerald-950">زیست‌بوم رسانه‌ای هوش مصنوعی سبب</span> • نذر فرهنگی مهدوی خادمان حضرت صاحب‌الزمان (عج)
+      </div>
+      <div class="flex items-center gap-3 text-slate-400">
+        <span>پایش ۶۴ خادم فعال</span>
+        <span>•</span>
+        <span>اتصال مستقیم فایل‌ها به مخزن گیت‌هاب</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= پاپ‌آپ (Modal) جزئیات پرونده و مدیا ================= -->
+  <div id="userModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-md transition-opacity p-3 sm:p-6 flex items-center justify-center">
+    
+    <div class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-emerald-100 overflow-hidden my-6 transform transition-all flex flex-col max-h-[92vh]">
+      
+      <!-- سربرگ مدال -->
+      <div class="px-6 py-4 bg-gradient-to-r from-emerald-900 via-teal-900 to-emerald-950 text-white flex items-center justify-between relative">
+        <div class="flex items-center gap-3.5">
+          <div id="modalUserAvatar" class="w-12 h-12 rounded-2xl bg-amber-400 text-emerald-950 font-black text-xl flex items-center justify-center shadow-md">
+            ح
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="modalUserName" class="text-lg font-black text-white">نام خادم</h3>
+              <span id="modalUserCode" class="px-2.5 py-0.5 text-xs rounded-full bg-emerald-800 text-amber-300 font-bold border border-amber-400/30">کد خادم</span>
+            </div>
+            <p id="modalUserLevelTitle" class="text-xs text-teal-200 mt-0.5">عنوان و سطح مهدوی</p>
+          </div>
+        </div>
+
+        <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition focus:outline-none">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- بدنه اسکرول‌خور مدال -->
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-slate-800">
+        
+        <!-- ۱. نوار اطلاعات هویتی و ارتباطی -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-cream-50 border border-emerald-100 rounded-2xl text-xs">
+          <div>
+            <span class="text-slate-400 block text-[11px] mb-0.5">موقعیت سکونت:</span>
+            <span id="modalCity" class="font-bold text-slate-800">گرگان، گلستان</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[11px] mb-0.5">سن خادم:</span>
+            <span id="modalAge" class="font-bold text-slate-800">۴۸ سال</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[11px] mb-0.5">شماره تماس (روبیکا):</span>
+            <div class="flex items-center gap-1.5 font-bold text-slate-800" dir="ltr">
+              <a id="modalPhoneLink" href="tel:" class="hover:text-teal-700 underline decoration-dotted">۰۹۱۱xxxxxxx</a>
+              <button onclick="copyPhone()" title="کپی شماره" class="text-teal-600 hover:text-teal-800 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[11px] mb-0.5">نام در روبیکا:</span>
+            <span id="modalRubikaName" class="font-bold text-slate-800 truncate block">خادم 087 حمزه شاکری</span>
+          </div>
+        </div>
+
+        <!-- ۲. شرح عملکرد، ابزارها و سوابق پشتیبانی -->
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-black text-emerald-950 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>خلاصه وضعیت عملکرد و سوابق:</span>
+            </div>
+            <span id="modalStatusBadge" class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+              تولیدکننده فعال
+            </span>
+          </div>
+
+          <p id="modalBio" class="text-xs sm:text-sm leading-relaxed text-slate-600">
+            شرح عملکرد کاربر در اینجا قرار می‌گیرد.
+          </p>
+
+          <!-- ابزارهای هوش مصنوعی استفاده شده -->
+          <div class="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-xs">
+            <span class="font-bold text-slate-500 text-[11px]">ابزارهای مسلط:</span>
+            <div id="modalToolsContainer" class="flex flex-wrap gap-1"></div>
+          </div>
+
+          <!-- اقدام بعدی پشتیبان -->
+          <div class="p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl text-xs flex items-start gap-2 text-amber-950">
+            <span class="font-black text-amber-800 shrink-0">اقدام بعدی پشتیبان:</span>
+            <span id="modalNextAction" class="leading-relaxed">پیگیری ساخت اثر دوم</span>
+          </div>
+        </div>
+
+        <!-- ۳. پخش‌کننده ویدئوی اثر مهدوی (پلیر گیت‌هاب) -->
+        <div id="modalVideoSection" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <span>ویدئوهای تولیدشده در نهضت</span>
+              <span id="modalVideoBadge" class="text-xs font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">۱ اثر کامل</span>
+            </h4>
+            <span class="text-[11px] text-slate-400">متصل به مخزن گیت‌هاب</span>
+          </div>
+
+          <div class="bg-slate-950 rounded-2xl overflow-hidden shadow-lg border border-slate-800">
+            <video id="modalVideoPlayer" controls class="w-full max-h-[380px] mx-auto bg-black" poster="https://placehold.co/800x450/064e3b/ffffff?text=%D9%BE%D8%AE%D8%B4+%D9%88%DB%8C%D8%AF%D8%A6%D9%88%DB%8C+%D9%85%D9%87%D8%AF%D9%88%DB%8C">
+              <source id="modalVideoSource" src="" type="video/mp4">
+              مرورگر شما از پخش مستقیم فایل ویدئو پشتیبانی نمی‌کند.
+            </video>
+            
+            <div class="p-3 bg-slate-900 text-slate-300 text-xs flex flex-wrap items-center justify-between gap-2 border-t border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 font-mono text-[11px]">📁 مسیر در گیت‌هاب:</span>
+                <code id="modalVideoPath" class="text-[11px] text-teal-300 bg-slate-800 px-2 py-0.5 rounded font-mono select-all">media/khadem_087/video1.mp4</code>
+                <button onclick="copyGithubPath()" title="کپی مسیر فایل" class="text-slate-400 hover:text-white transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </button>
+              </div>
+              <a id="modalVideoDirectLink" href="#" target="_blank" class="text-[11px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1 underline">
+                <span>باز کردن فایل خام ویدیو</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- پیام در صورتی که کاربر ویدئو نداشته باشد -->
+        <div id="modalNoVideoNotice" class="hidden p-4 rounded-2xl bg-cream-50 border border-slate-200 text-xs text-slate-600 text-center leading-relaxed">
+          🎬 این خادم در مرحله تصویرسازی سناریو یا حل موانع فنی است و هنوز فایل ویدیویی کامل بارگذاری نکرده است.
+        </div>
+
+        <!-- ۴. گالری تصاویر و استوری‌بوردها -->
+        <div id="modalImagesSection" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+              <span>تصاویر، استوری‌بورد و پرامپت‌ها</span>
+              <span id="modalImageBadge" class="text-xs font-bold px-2 py-0.5 rounded bg-teal-100 text-teal-800">۴ تصویر</span>
+            </h4>
+            <span class="text-[11px] text-slate-400">کلیک جهت بزرگ‌نمایی تصویر</span>
+          </div>
+
+          <!-- گرید تصاویر -->
+          <div id="modalImageGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+        </div>
+
+      </div>
+
+      <!-- پابرگ مدال با دکمه بستن -->
+      <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <span class="text-xs text-slate-500 font-medium">پایش مستمر خادمان نهضت مهدوی سبب</span>
+        <button onclick="closeModal()" class="px-5 py-2 text-xs font-bold bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl shadow-sm transition">
+          بستن پنجره
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= پاپ‌آپ اعضای راکد (۱۷۸ خادم در انتظار تعامل) ================= -->
+  <div id="idleModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-md p-4 flex items-center justify-center">
+    <div class="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-amber-200 p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-amber-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 font-black flex items-center justify-center">۱۷۸</div>
+          <h3 class="text-base font-extrabold text-slate-900">وضعیت ۱۷۸ عضو راکد و در انتظار تعامل (وارم‌آپ)</h3>
+        </div>
+        <button onclick="closeIdleModal()" class="text-slate-400 hover:text-slate-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed">
+        به دستور شما، برای جلوگیری از شلوغ شدن فضای کاری و تمرکز صرف بر خادمان فعال، اعضای راکد از چیدمان اصلی کنار گذاشته شده‌اند. این دسته شامل:
+      </p>
+      <div class="space-y-2.5 text-xs">
+        <div class="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/70 flex items-center justify-between">
+          <span>خادمان فاز یک بدون ارسال پیام (ثبت‌نامی‌های جدید):</span>
+          <span class="font-bold text-amber-900">۱۳۸ نفر (پیام وارم‌آپ ارسال شد)</span>
+        </div>
+        <div class="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/70 flex items-center justify-between">
+          <span>اعضای دوره اول مدرسه فاز صفر بدون پاسخ به پیگیری:</span>
+          <span class="font-bold text-amber-900">۴۰ نفر (در صف فعال‌سازی مجدد)</span>
+        </div>
+      </div>
+      <div class="text-left pt-2">
+        <button onclick="closeIdleModal()" class="px-5 py-2 text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl transition">
+          متوجه شدم
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= پاپ‌آپ اعضای لغو و مرخصی (۲۵ خادم) ================= -->
+  <div id="archivedModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-md p-4 flex items-center justify-center">
+    <div class="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-slate-200 text-slate-800 font-black flex items-center justify-center">۲۵</div>
+          <h3 class="text-base font-extrabold text-slate-900">خادمان دارای مرخصی موقت یا لغو عهدنامه</h3>
+        </div>
+        <button onclick="closeArchivedModal()" class="text-slate-400 hover:text-slate-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed">
+        این افراد به دلایل موجه در حال حاضر از چرخه ارسال اثر معاف شده‌اند و پرونده آن‌ها به صورت مجزا بایگانی شده است:
+      </p>
+      <div class="space-y-2 text-xs">
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+          <span>مرخصی پزشکی (نقاهت عمل جراحی - اکرم عربشاهی):</span>
+          <span class="font-bold text-slate-800">۱ نفر</span>
+        </div>
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+          <span>مرخصی کنکور و آزمون (آیدا مرادی‌زاده، محدثه دارینی):</span>
+          <span class="font-bold text-slate-800">۲ نفر</span>
+        </div>
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+          <span>مشغله کاری موقت (خادم‌الزهرا):</span>
+          <span class="font-bold text-slate-800">۱ نفر</span>
+        </div>
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+          <span>لغو عهدنامه به دلیل نداشتن سخت‌افزار (مریم خیراندیش و...):</span>
+          <span class="font-bold text-slate-800">۱۰ نفر</span>
+        </div>
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+          <span>دستور قطعی حذف طبق فایل‌های صوتی یا فقدان روبیکا:</span>
+          <span class="font-bold text-slate-800">۱۱ نفر</span>
+        </div>
+      </div>
+      <div class="text-left pt-2">
+        <button onclick="closeArchivedModal()" class="px-5 py-2 text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl transition">
+          بستن پنجره
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= لایت‌باکس بزرگ‌نمایی تصویر ================= -->
+  <div id="imageLightbox" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md p-4 flex items-center justify-center" onclick="closeLightbox()">
+    <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-10 left-0 text-white hover:text-amber-300 transition">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <img id="lightboxImg" src="" alt="" class="max-w-full max-h-[80vh] rounded-2xl shadow-2xl object-contain border border-white/10">
+      <div id="lightboxCaption" class="mt-3 text-white text-xs font-bold text-center"></div>
+      <div id="lightboxPath" class="text-teal-300 font-mono text-[11px] mt-1 select-all"></div>
+    </div>
+  </div>
+
+  <!-- توست اعلان عملیات -->
+  <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-emerald-950 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-bold border border-emerald-700">
+    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    <span id="toastMsg">عملیات انجام شد</span>
+  </div>
+
+  <!-- ================= دیتابیس کامل ۶۴ خادم فعال و توابع جاوااسکریپت ================= -->
+  <script>
+    // پایگاه داده تفکیک‌شده و قطعی ۶۴ کاربر فعال
+    const khademanData = [
+      // ================= سطح ۳: راویان ظهور (۱۴ نفر ویدئوساز) =================
+      {
+        id: "khadem_087",
+        name: "حمزه شاکری",
+        code: "خادم 087",
+        rubikaName: "خادم 087 حمزه شاکری",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "گرگان، گلستان",
+        age: "۴۸",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "تولیدکننده فعال و حرفه‌ای",
+        bio: "۲۵ سال سابقه در صداوسیما. ساخت سناریوی مهدوی با گویندگی حرفه‌ای و تولید ۱ اثر کامل ویدیویی استاندارد رسانه‌ای.",
+        nextAction: "سپردن پروژه‌های بزرگتر روایی و سریال‌های چند قسمتی مهدوی",
+        videosCount: 1,
+        imagesCount: 4,
+        tools: ["ChatGPT", "Leonardo AI", "Premiere", "Vidu"],
+        githubPath: "media/khadem_087/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        images: [
+          { title: "سکانس ۱: حرم و مناره‌ها", path: "media/khadem_087/scene1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "سکانس ۲: پرسوناژ نذر فرهنگی", path: "media/khadem_087/scene2.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "سکانس ۳: مسجد جمکران", path: "media/khadem_087/scene3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "سکانس ۴: کادر دعای فرج", path: "media/khadem_087/scene4.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_20",
+        name: "سجاد شورچه",
+        code: "مدرسه دوره اول 20",
+        rubikaName: "سجاد شورچه مدرسه دوره اول",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "کنگاور، کرمانشاه",
+        age: "۳۷",
+        phone: "۰۹۱۲۵۴۹۳۳۴۸",
+        statusBadge: "تولیدکننده ۳ اثر ویدیویی",
+        bio: "تولید ۳ ویدیوی مهدوی بسیار باکیفیت؛ تعامل بالا در گروه خادمان و کمک به رفع اشکال سایر اعضا.",
+        nextAction: "ترغیب به تولید اثر چهارم و هدایت بخش انیمیشن گروه",
+        videosCount: 3,
+        imagesCount: 3,
+        tools: ["ChatGPT", "Vidu", "CapCut"],
+        githubPath: "media/madrese_20/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        images: [
+          { title: "پوستر اثر اول", path: "media/madrese_20/poster1.jpg", url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=700&q=80" },
+          { title: "سکانس متحرک اثر دوم", path: "media/madrese_20/scene2.jpg", url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" },
+          { title: "فریم نهایی اثر سوم", path: "media/madrese_20/scene3.jpg", url: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_49",
+        name: "مهدیه کرمی",
+        code: "مدرسه دوره اول 49",
+        rubikaName: "مهدیه کرمی مدرسه دوره اول",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "مشهد، خراسان رضوی",
+        age: "۳۰",
+        phone: "۰۹۳۶۷۴۸۷۴۵۳",
+        statusBadge: "تولیدکننده ۳ ویدئو",
+        bio: "ارسال حدود ۳ ویدئوی مهدوی؛ تسلط عالی بر تنظیم حجم و ادغام موزیک و افکت صوتی بر نریشن.",
+        nextAction: "دریافت خروجی نهایی بدون افت کیفیت در ابعاد عمودی",
+        videosCount: 3,
+        imagesCount: 2,
+        tools: ["Leonardo AI", "Vidu", "InShot"],
+        githubPath: "media/madrese_49/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        images: [
+          { title: "استوری‌بورد قصه", path: "media/madrese_49/img1.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر پایانی ویدیو", path: "media/madrese_49/img2.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_45",
+        name: "الهام سلیمانی",
+        code: "مدرسه دوره اول 45",
+        rubikaName: "الهام سلیمانی مدرسه دوره اول",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "نهبندان، خراسان جنوبی",
+        age: "۳۲",
+        phone: "۰۹۳۸۴۰۳۲۶۵",
+        statusBadge: "تولید انیمیشن لگویی",
+        bio: "ساخت ۲ ویدیوی کامل داستان کارگاه خیاطی محله به سبک انیمیشن لگو با ترکیب DeepSeek و Google Flow در کادر عمودی ۹:۱۶.",
+        nextAction: "ارسال سوژه داستان دوم از کتاب فرزند خورشید",
+        videosCount: 2,
+        imagesCount: 4,
+        tools: ["DeepSeek", "Google Flow", "CapCut"],
+        githubPath: "media/madrese_45/lego_video.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+        images: [
+          { title: "کاراکترهای لگویی محله", path: "media/madrese_45/lego1.jpg", url: "https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&w=700&q=80" },
+          { title: "کارگاه خیاطی مهدوی", path: "media/madrese_45/lego2.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "پرچم و نمادهای نذر", path: "media/madrese_45/lego3.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "فریم خروجی گوگل فلو", path: "media/madrese_45/lego4.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_35",
+        name: "علیرضا عباس‌زاده قلعه‌خانی",
+        code: "مدرسه دوره اول 35",
+        rubikaName: "علیرضا عباس زاده قلعه خانی مدرسه دوره اول",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "بم، کرمان",
+        age: "۲۱",
+        phone: "۰۹۳۹۵۰۷۳۵۹۵",
+        statusBadge: "تولیدکننده ۲ ویدئو",
+        bio: "ارسال ۲ ویدئوی مهدوی استاندارد؛ ۱۳۵ پیام تعاملی در حل مسائل فنی، تسلط بر ابزار CloudConvert و تغییر ابعاد به عمودی.",
+        nextAction: "سپردن پروژه تدوین برای کانال‌های مهدوی روبیکا",
+        videosCount: 2,
+        imagesCount: 3,
+        tools: ["DeepSeek", "Vidu", "CloudConvert"],
+        githubPath: "media/madrese_35/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+        images: [
+          { title: "سکانس آغازین", path: "media/madrese_35/scene1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر عمودی متحرک", path: "media/madrese_35/scene2.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "پایان‌بندی مهدوی", path: "media/madrese_35/scene3.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_070",
+        name: "نسرین شاکر (Nasrin Shaker)",
+        code: "خادم 070",
+        rubikaName: "خادم 070 Nasrin Shaker",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "تهران",
+        age: "۳۱",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "مسلط به چند ابزار هوش مصنوعی",
+        bio: "تولید اثر ۳ سکانسی ۱۵ ثانیه‌ای؛ ویرایش مجدد نریشن صوتی برای حذف سکوت‌ها و تنظیم ریتم اثر.",
+        nextAction: "دعوت به منتورینگ در گروه خادمان و ارائه آموزش تدوین",
+        videosCount: 1,
+        imagesCount: 3,
+        tools: ["ChatGPT", "DeepSeek", "Google Flow", "AiStudio", "123apps"],
+        githubPath: "media/khadem_070/video_3seq.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+        images: [
+          { title: "سکانس بافتنی کودکانه", path: "media/khadem_070/scene1.jpg", url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=700&q=80" },
+          { title: "حرکت کاراکتر در فلو", path: "media/khadem_070/scene2.jpg", url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر عمودی پایانی", path: "media/khadem_070/scene3.jpg", url: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_013",
+        name: "فاطمه حلما رستگاران",
+        code: "خادم 013",
+        rubikaName: "خادم 013 فاطمه حلما رستگاران",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "تهران",
+        age: "۲۰",
+        phone: "۰۹۱۹xxxxxxx",
+        statusBadge: "اقتباس داستانی از کتاب",
+        bio: "تولید ۱ ویدیوی کامل و بسیار تمیز از داستان ولادت امام زمان (عج) بر اساس کتاب فرزند خورشید با ElevenLabs و Veed.",
+        nextAction: "انتخاب قصه دوم از کتاب و تولید قسمت دوم مجموعه",
+        videosCount: 1,
+        imagesCount: 4,
+        tools: ["ChatGPT", "Veed.io", "ElevenLabs"],
+        githubPath: "media/khadem_013/farzand_khorshid.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        images: [
+          { title: "تصویرسازی ولادت خورشید", path: "media/khadem_013/img1.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "پرتره تاریخی کودکانه", path: "media/khadem_013/img2.jpg", url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80" },
+          { title: "فضاسازی نور و امید", path: "media/khadem_013/img3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر پایانی کتاب", path: "media/khadem_013/img4.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_002",
+        name: "یوسف (Yousef)",
+        code: "خادم 002",
+        rubikaName: "خادم 002 یوسف",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "مشهد، خراسان رضوی",
+        age: "۳۵",
+        phone: "۰۹۰۱۵۲۶۸۵۴۰",
+        statusBadge: "تولیدکننده ویدئوی کامل",
+        bio: "تولید و ارسال ۱ ویدیوی مهدوی با گویندگی دلنشین از بانک داستان؛ از نخستین خادمان تحویل‌دهنده اثر کامل.",
+        nextAction: "ارسال سوژه از بانک داستان‌های مهدوی برای ساخت دومین اثر",
+        videosCount: 1,
+        imagesCount: 2,
+        tools: ["ChatGPT", "Vidu", "CapCut"],
+        githubPath: "media/khadem_002/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        images: [
+          { title: "سلام به امام عصر", path: "media/khadem_002/scene1.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر یا مهدی ادرکنی", path: "media/khadem_002/scene2.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_55",
+        name: "محمد ابراهیمی",
+        code: "مدرسه دوره اول 55",
+        rubikaName: "محمد ابراهیمی مدرسه دوره اول",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "اصفهان",
+        age: "۳۳",
+        phone: "۰۹۳۵۷۵۶۵۱۸۸",
+        statusBadge: "تولید اثر هیئت جوانان",
+        bio: "خادم هیئت جوانان اصفهان؛ ساخت و تحویل ۱ اثر ویدیویی کامل و باکیفیت جهت پخش در ایام ولادت حضرت.",
+        nextAction: "همراهی در تولید اثر دوم ویژه موکب نیمه شعبان",
+        videosCount: 1,
+        imagesCount: 3,
+        tools: ["ChatGPT", "Leonardo AI", "CapCut"],
+        githubPath: "media/madrese_55/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        images: [
+          { title: "فضای موکب اصفهان", path: "media/madrese_55/img1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "جوانان منتظر ظهور", path: "media/madrese_55/img2.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر پایانی نذر", path: "media/madrese_55/img3.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_082",
+        name: "زهرا عباسی",
+        code: "خادم 082 / مدرسه 19",
+        rubikaName: "خادم 082 زهراعباسی",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "تهران",
+        age: "۱۳",
+        phone: "۰۹۳۷۸۱۷۷۹۰۶",
+        statusBadge: "نوجوان تولیدکننده (۲ اثر)",
+        bio: "نوجوان ۱۳ ساله بسیار باانگیزه؛ تولید و ارسال ۱ الی ۲ ویدئوی مهدوی با استفاده از قالب‌های کوتاه.",
+        nextAction: "تشویق، روحیه دادن و انگیزش متناسب با سن برای ورود به کارهای تیمی",
+        videosCount: 2,
+        imagesCount: 2,
+        tools: ["ChatGPT", "Vidu", "InShot"],
+        githubPath: "media/khadem_082/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+        images: [
+          { title: "طراحی کادر کودکانه", path: "media/khadem_082/art1.jpg", url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80" },
+          { title: "انیمیت کاراکتر امید", path: "media/khadem_082/art2.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_25",
+        name: "سوفیا عباسی",
+        code: "مدرسه دوره اول 25",
+        rubikaName: "سوفیا عباسی مدرسه دوره اول",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "تهران",
+        age: "۱۱",
+        phone: "۰۹۳۶۲۹۹۶۷۵۵",
+        statusBadge: "کوچک‌ترین ویدئوساز (۱۱ ساله)",
+        bio: "ساخت ویدیوی اول داستانی؛ هماهنگی جهت ضبط صدای گوینده در آخر هفته در کنار پدر با آرامش.",
+        nextAction: "پشتیبانی در تدوین صدای گوینده روی ویدیوی اول",
+        videosCount: 1,
+        imagesCount: 3,
+        tools: ["ChatGPT", "Vidu", "Voice Recorder"],
+        githubPath: "media/madrese_25/video1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+        images: [
+          { title: "تصویرسازی ۱۱ سالگی", path: "media/madrese_25/sofia1.jpg", url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=700&q=80" },
+          { title: "شخصیت قصه مهدوی", path: "media/madrese_25/sofia2.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "طراحی کادر بهشت", path: "media/madrese_25/sofia3.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_103",
+        name: "لیلا بهرامی",
+        code: "خادم 103",
+        rubikaName: "خادم 103 لیلا بهرامی",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "تهران",
+        age: "۳۷",
+        phone: "۰۹۱۹۶۷۲۷۵۷۹",
+        statusBadge: "پشتکار فوق‌العاده",
+        bio: "غلبه بر محدودیت‌های سنگین تحریم و فیلتر شکن؛ ساخت ۱ سکانس با Leonardo AI و ChatGPT بر اساس داستان شفای بیمار.",
+        nextAction: "اتصال سکانس‌ها با ابزار Vidu و ارسال خروجی ۹۰ ثانیه‌ای عمودی",
+        videosCount: 1,
+        imagesCount: 3,
+        tools: ["Leonardo AI", "ChatGPT", "Vidu"],
+        githubPath: "media/khadem_103/shafa_bimar_seq1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+        images: [
+          { title: "کانسپت لئوناردو ۳D", path: "media/khadem_103/frame1.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "فضای نورانی شفا", path: "media/khadem_103/frame2.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "عنایت حضرت ولی‌عصر", path: "media/khadem_103/frame3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_072",
+        name: "الهه زاهدی",
+        code: "خادم 072",
+        rubikaName: "خادم 072 الهه زاهدی",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "تهران",
+        age: "۲۹",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "تولیدکننده کلیپ لگویی",
+        bio: "ارسال کلیپ لگویی خوش‌ریتم؛ علاقه‌مند و در حال آماده‌سازی دومین اثر مهدوی با موضوع جوانان و قیام قرآنی.",
+        nextAction: "ارسال راهنمای تبدیل سناریوی قرآنی به ۳ سکانس متوالی",
+        videosCount: 1,
+        imagesCount: 3,
+        tools: ["Leonardo AI", "DeepSeek", "CapCut"],
+        githubPath: "media/khadem_072/lego_clip.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        images: [
+          { title: "کاراکتر لگویی جوانان", path: "media/khadem_072/art1.jpg", url: "https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&w=700&q=80" },
+          { title: "قیام قرآنی لگویی", path: "media/khadem_072/art2.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر پایانی کلیپ", path: "media/khadem_072/art3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_043",
+        name: "فاطمه عرب جعفری",
+        code: "خادم 043",
+        rubikaName: "خادم 043 فاطمه عرب جعفری",
+        level: 3,
+        levelTitle: "مهدی‌یار سطح ۳ (راوی ظهور)",
+        city: "اصفهان",
+        age: "۲۵",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "تولید ۱ سکانس متحرک",
+        bio: "تولید تصاویر و اولین سکانس متحرک بسیار تمیز و استاندارد؛ تمرکز بر یک ابزار جهت جلوگیری از پراکندگی ذهن.",
+        nextAction: "ساخت سکانس‌های بعدی و الصاق نریشن صوتی در کپ‌کات",
+        videosCount: 1,
+        imagesCount: 3,
+        tools: ["ChatGPT", "Vidu", "CapCut"],
+        githubPath: "media/khadem_043/seq1.mp4",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        images: [
+          { title: "سکانس اول متحرک", path: "media/khadem_043/img1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "شخصیت داستانی نذر", path: "media/khadem_043/img2.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "فضای شب قدر و انتظار", path: "media/khadem_043/img3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+
+      // ================= سطح ۲: نگارگران عهد (۱۰ نفر تصویرساز) =================
+      {
+        id: "khadem_137",
+        name: "زهرا رشیدی عزآبادی",
+        code: "خادم 137",
+        rubikaName: "خادم 137 زهرا رشیدی عزآبادی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "یزد",
+        age: "۲۹",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "متخصص پرامپت جمنای",
+        bio: "تسلط کامل به خلق تصاویر با کیفیت بالا از طریق Gemini؛ حل مشکل نشت IP و آماده‌سازی فریم‌های تبدیل به ویدیو.",
+        nextAction: "متحرک‌سازی تصاویر آماده‌شده با Vidu و مرورگر Tor",
+        videosCount: 0,
+        imagesCount: 5,
+        tools: ["Google Gemini", "ChatGPT", "Tor Browser"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر مسجد با جمنای", path: "media/khadem_137/gemini1.jpg", url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" },
+          { title: "خادم جوان مهدوی", path: "media/khadem_137/gemini2.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "نور سحرگاهی ظهور", path: "media/khadem_137/gemini3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "سکانس پخش گل نرگس", path: "media/khadem_137/gemini4.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "طراحی کادر دعای فرج", path: "media/khadem_137/gemini5.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_009",
+        name: "فاطمه شم‌آبادی",
+        code: "خادم 009",
+        rubikaName: "خادم 009 فاطمه شم آبادی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "سبزوار، خراسان رضوی",
+        age: "۲۶",
+        phone: "۰۹۳۳xxxxxxx",
+        statusBadge: "خلق ۳ تصویر موفق",
+        bio: "تولید ۳ تصویر بسیار باکیفیت و هماهنگ از طریق پرامپت‌های مهندسی‌شده در ChatGPT؛ دریافت راهنمای ورود به Vidu.",
+        nextAction: "دریافت ۳ خروجی متحرک ۵ ثانیه‌ای و ترکیب در کپ‌کات",
+        videosCount: 0,
+        imagesCount: 3,
+        tools: ["ChatGPT (DALL-E)", "Vidu"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طلوع خورشید امید", path: "media/khadem_009/img1.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "شهر آرمانی مهدوی", path: "media/khadem_009/img2.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "پرچم یالثارات الحسین", path: "media/khadem_009/img3.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_130",
+        name: "مهدیه سرحدی",
+        code: "خادم 130 / مدرسه 36",
+        rubikaName: "خادم 130 مهدیه سرحدی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "جیرفت، کرمان",
+        age: "۲۷",
+        phone: "۰۹۱۰۷۵۴۹۳۸۹",
+        statusBadge: "تصویرساز کلاژ کاغذی",
+        bio: "خلق تصاویر خلاقانه به سبک کلاژ کاغذی و موشن مهدوی؛ شخصیت‌پردازی کودکان منتظر با حفظ هارمونی رنگ‌های گرم ایرانی.",
+        nextAction: "متحرک‌سازی تصاویر آماده‌شده با Vidu و مرورگر Tor",
+        videosCount: 0,
+        imagesCount: 4,
+        tools: ["ChatGPT", "Midjourney Style", "Vidu"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کلاژ کاغذی کاروان امید", path: "media/khadem_130/collage1.jpg", url: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=700&q=80" },
+          { title: "کودک منتظر کنار پنجره", path: "media/khadem_130/collage2.jpg", url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80" },
+          { title: "باغ گل نرگس کاغذی", path: "media/khadem_130/collage3.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "تکمیل کادر مهدوی", path: "media/khadem_130/collage4.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_052",
+        name: "زینب‌سادات حسینی",
+        code: "خادم 052",
+        rubikaName: "خادم 052 زینب سادات حسینی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "قم",
+        age: "۲۴",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "طراح شناسنامه کاراکتر",
+        bio: "ساخت موفق شناسنامه کاراکتر یونس و خواهرش در سناریوی مهدوی با حفظ ثبات چهره در چند زاویه مختلف دوربین.",
+        nextAction: "قرار دادن کاراکتر در محیط موکب نیمه شعبان",
+        videosCount: 0,
+        imagesCount: 4,
+        tools: ["ChatGPT", "Leonardo AI"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "شناسنامه چهره یونس", path: "media/khadem_052/younes.jpg", url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80" },
+          { title: "شناسنامه چهره خواهر", path: "media/khadem_052/sister.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "تعامل در فضای موکب", path: "media/khadem_052/scene_mokeb.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "رندر سه‌بعدی دیزنی", path: "media/khadem_052/render.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_036",
+        name: "هستی علی‌بیگی",
+        code: "خادم 036",
+        rubikaName: "خادم 036 هستی علی بیگی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "سیرجان، کرمان",
+        age: "۱۴",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "طراحی پرامپت انگلیسی",
+        bio: "نوجوان ۱۴ ساله؛ طراحی شناسنامه کاراکتر آرمان، نگارش ۳ سکانس با پرامپت انگلیسی Google Veo و تولید تصاویر صحنه اول.",
+        nextAction: "تصویرسازی سکانس‌های ۲ و ۳ با حفظ چهره آرمان",
+        videosCount: 0,
+        imagesCount: 3,
+        tools: ["Google Veo Prompting", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "شناسنامه آرمان", path: "media/khadem_036/arman.jpg", url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=700&q=80" },
+          { title: "پرامپت انگلیسی سکانس ۱", path: "media/khadem_036/prompt1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "تصویر خروجی جمنای", path: "media/khadem_036/out1.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_064",
+        name: "لایا وطن‌خواه (Layavatankhah)",
+        code: "خادم 064",
+        rubikaName: "خادم 064 Layavatankhah",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "تهران",
+        age: "۳۰",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "تلفیق طراحی دستی و هوش مصنوعی",
+        bio: "طراحی دستی کاراکتر داستان و ارتقای آن در ChatGPT؛ ترکیب بهترین شیوه طراحی هنری اصیل برای خلق کاراکتر مهدوی.",
+        nextAction: "پرامپت‌نویسی صحنه‌ها و خروجی فریم‌های انیمیشن",
+        videosCount: 0,
+        imagesCount: 3,
+        tools: ["Hand Sketching", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "اسکچ دستی اولیه", path: "media/khadem_064/sketch.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "بهبود کاراکتر با GPT", path: "media/khadem_064/gpt_art.jpg", url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" },
+          { title: "رنگ‌آمیزی نهایی", path: "media/khadem_064/final.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_172",
+        name: "فاطمه منصوری",
+        code: "خادم 172",
+        rubikaName: "خادم 172 فاطمه منصوری",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "گرگان، گلستان",
+        age: "۲۸",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "طراح استوری و پوستر",
+        bio: "طراحی پوستر و استوری اولیه نمایشگاه فاطمیه گرگان؛ رفع ابهام درباره تحت وب بودن Gemini و راهنمایی فیلترشکن.",
+        nextAction: "انتخاب قصه رسمی از بانک داستان و تولید تصاویر نذر",
+        videosCount: 0,
+        imagesCount: 3,
+        tools: ["Google Gemini", "ChatGPT", "Canva"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "استوری نمایشگاه فاطمیه", path: "media/khadem_172/story1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "طراحی کادر مهدوی", path: "media/khadem_172/frame.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "تست جمنای در وب", path: "media/khadem_172/gemini.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_31",
+        name: "زهرا ولی‌پور",
+        code: "مدرسه دوره اول 31",
+        rubikaName: "زهرا ولی پور مدرسه دوره اول",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "تهران / البرز",
+        age: "۳۳",
+        phone: "۰۹۹۱۹۱۹۹۰۴۳",
+        statusBadge: "تولید تصاویر مرجع (۱۷۱ پیام)",
+        bio: "۱۷۱ پیام تعاملی؛ نگارش سناریو و تصاویر مرجع مهدوی؛ عبور از کسالت و اسباب‌کشی و آماده ورود به متحرک‌سازی در Vidu.",
+        nextAction: "همراهی در Vidu با مرورگر Tor و ساخت نخستین سکانس",
+        videosCount: 0,
+        imagesCount: 4,
+        tools: ["ChatGPT", "Vidu", "InShot"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر مرجع سناریو", path: "media/madrese_31/ref1.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "سکانس مسجد و نور", path: "media/madrese_31/ref2.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "کاراکتر خادم جوان", path: "media/madrese_31/ref3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر پایان قصه", path: "media/madrese_31/ref4.jpg", url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_034",
+        name: "ستایش اوتادی",
+        code: "خادم 034",
+        rubikaName: "خادم 034 ستایش اوتادی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "تهران",
+        age: "۱۹",
+        phone: "۰۹۱۹xxxxxxx",
+        statusBadge: "تصویرسازی بانک داستان",
+        bio: "آشنایی با ابزارهای تصویری و تولید خروجی تصاویر داستانی از روی داستان‌های بانک مهدوی.",
+        nextAction: "هدایت به ضبط صوت یا استفاده از گوینده هوش مصنوعی",
+        videosCount: 0,
+        imagesCount: 3,
+        tools: ["ChatGPT", "Bing Image Creator"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر قصه اول", path: "media/khadem_034/img1.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" },
+          { title: "تصویر قصه دوم", path: "media/khadem_034/img2.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "کادر خورشید نیمه‌شعبان", path: "media/khadem_034/img3.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_031",
+        name: "فاطمه خزاعی",
+        code: "خادم 031",
+        rubikaName: "خادم 031 فاطمه خزاعی",
+        level: 2,
+        levelTitle: "مهدی‌یار سطح ۲ (نگارگر عهد)",
+        city: "مشهد، خراسان رضوی",
+        age: "۳۲",
+        phone: "۰۹۱۵xxxxxxx",
+        statusBadge: "تصاویر آماده / در آستانه انیمیت",
+        bio: "تولید تصاویر صحنه‌های مهدوی؛ رفع چالش ضبط نریشن و متحرک‌سازی در گروه سبب و آماده‌سازی خروجی ویدیو.",
+        nextAction: "ارسال آموزش گام‌به‌گام Vidu در گروه جهت متحرک‌سازی تصاویر",
+        videosCount: 0,
+        imagesCount: 3,
+        tools: ["ChatGPT", "Vidu"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "صحنه ۱ آماده انیمیت", path: "media/khadem_031/scene1.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" },
+          { title: "صحنه ۲ کاراکتر منتظر", path: "media/khadem_031/scene2.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "صحنه ۳ پرچم سبز", path: "media/khadem_031/scene3.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+
+      // ================= سطح ۱: رهپویان سبب (۴۰ نفر تعاملی و آموزشی) =================
+      {
+        id: "khadem_073",
+        name: "سهراب چوپانی",
+        code: "خادم 073",
+        rubikaName: "خادم 073 سهراب چوپانی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "خوشاب، سلطان‌آباد",
+        age: "۳۱",
+        phone: "۰۹۱۵xxxxxxx",
+        statusBadge: "تاسیس کانال آپارات مهدوی",
+        bio: "انگیزه بسیار بالا؛ راه‌اندازی کانال مهدوی در آپارات، عضویت فعال در گروه سبب و هدف‌گذاری ساخت بیش از ۵ اثر نذر.",
+        nextAction: "ارسال فایل سناریوهای آماده ۳ دقیقه‌ای برای شروع ساخت اولین کار",
+        videosCount: 0,
+        imagesCount: 2,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کاور کانال مهدوی آپارات", path: "media/khadem_073/aparat.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "تست جمکران با هوش مصنوعی", path: "media/khadem_073/jamkaran.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_125",
+        name: "کوثر البوغبیش",
+        code: "خادم 125",
+        rubikaName: "خادم 125 کوثر البوغبیش",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "ماهشهر، خوزستان",
+        age: "۲۳",
+        phone: "۰۹۳۹xxxxxxx",
+        statusBadge: "سفیر آموزشی نوجوانان موکب",
+        bio: "انتقال آموزش‌های هوش مصنوعی به نوجوانان موکب محله برای تولید گروهی آثار مهدوی؛ دریافت لینک بانک داستان.",
+        nextAction: "پشتیبانی آموزشی و ارسال فایل‌های تدریس به نوجوانان",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کانسپت نوجوانان موکب", path: "media/khadem_125/mokeb.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_085",
+        name: "سعید غلامی",
+        code: "خادم 085",
+        rubikaName: "خادم 085 سعیدغلامی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "برازجان، بوشهر",
+        age: "۴۳",
+        phone: "۰۹۱۷xxxxxxx",
+        statusBadge: "فرهنگی فعال / مشاور آموزشی",
+        bio: "معلم و فعال فرهنگی پرمشغله؛ ارسال نمونه عکس و تعامل سازنده؛ معرفی ابزار NotebookLM جهت کار با دانش‌آموزان.",
+        nextAction: "بهره‌گیری از تجربیات در هدایت و مشاوره سناریوهای مهدوی",
+        videosCount: 0,
+        imagesCount: 2,
+        tools: ["Google NotebookLM", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویرسازی دانش‌آموزی", path: "media/khadem_085/school.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "پوستر فرهنگی مهدوی", path: "media/khadem_085/poster.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_179",
+        name: "محدثه فانی",
+        code: "خادم 179",
+        rubikaName: "خادم 179 محدثه فانی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "گرگان، گلستان",
+        age: "۲۷",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "در مرحله اجرای پیش‌نویس",
+        bio: "پیگیری شده و در حال آماده‌سازی اثر؛ ارجاع به بانک داستان و آماده‌سازی سناریو.",
+        nextAction: "در انتظار دریافت نخستین پیش‌نویس تصویری",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "Gemini"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "پیش‌نویس اثر مهدوی", path: "media/khadem_179/draft.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_140",
+        name: "مریم اماندادی",
+        code: "خادم 140",
+        rubikaName: "خادم 140 مریم اماندادی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "بم، کرمان",
+        age: "۲۹",
+        phone: "۰۹۳۶xxxxxxx",
+        statusBadge: "نگارش داستان شخصی",
+        bio: "تست ابزارهای ChatGPT و Gemini؛ نگارش سناریوی مهدوی از داستان شخصی با ارسال صوت.",
+        nextAction: "تبدیل سناریو به پرامپت‌های تصویری",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست پرامپت در چت‌جی‌پی‌تی", path: "media/khadem_140/test.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_015",
+        name: "مینا محمدلو",
+        code: "خادم 015",
+        rubikaName: "خادم 015 مینا محمدلو",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "زنجان",
+        age: "۳۵",
+        phone: "۰۹۱۹xxxxxxx",
+        statusBadge: "پایان نقاهت و شروع پرانگیزه",
+        bio: "پس از پشت سر گذاشتن بیماری، چت‌جی‌پی‌تی را نصب کرد؛ حل مشکل ذخیره پرامپت‌ها و ساخت اولین عکس تمرینی.",
+        nextAction: "هدایت به بانک داستان برای انتخاب سناریوی اصلی",
+        videosCount: 0,
+        imagesCount: 2,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "اولین عکس تمرینی خیاطی", path: "media/khadem_015/img1.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" },
+          { title: "اسکرین‌شات حل خطای ورود", path: "media/khadem_015/chat.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_032",
+        name: "فاطمه فلاح",
+        code: "خادم 032",
+        rubikaName: "خادم 032 فاطمه فلاح",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "تهران",
+        age: "۲۶",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "دریافت بانک داستان",
+        bio: "درخواست لینک بانک داستان‌های مهدوی و دریافت آن؛ انتخاب سناریو جهت شروع تمرینات.",
+        nextAction: "پیگیری انتخاب قصه و شروع اولین پرامپت تصویری",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست تصویرسازی", path: "media/khadem_032/test.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_003",
+        name: "الهه معنوی",
+        code: "خادم 003",
+        rubikaName: "خادم 003 الهه معنوی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "مشهد، خراسان رضوی",
+        age: "۲۷",
+        phone: "۰۹۱۵xxxxxxx",
+        statusBadge: "مشاهده آموزش‌ها",
+        bio: "شروع دوره و دریافت راهنمای انتخاب قصه از بانک داستان؛ بررسی ابزارهای رایگان هوش مصنوعی.",
+        nextAction: "پیگیری ساخت نخستین تصویر مهدوی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["DeepSeek", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی کادر سلام", path: "media/khadem_003/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_033",
+        name: "اکرم ویسمه",
+        code: "خادم 033",
+        rubikaName: "خادم 033 اکرم ویسمه",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "اراک، مرکزی",
+        age: "۴۰",
+        phone: "۰۹۱۸xxxxxxx",
+        statusBadge: "رفع دغدغه فنی فیلترشکن",
+        bio: "نگرانی بابت آسیب فیلترشکن به گوشی؛ دریافت راهنمای نصب مرورگر امن Tor و کاهش دغدغه وقت.",
+        nextAction: "مشاهده آموزش‌های اولیه و انتخاب داستان",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["Tor Browser", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "اسکرین‌شات تست اتصال", path: "media/khadem_033/screen.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_038",
+        name: "نفیسه حردانی",
+        code: "خادم 038",
+        rubikaName: "خادم 038 نفیسه حردانی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "مشهد، خراسان رضوی",
+        age: "۳۳",
+        phone: "۰۹۱۵xxxxxxx",
+        statusBadge: "مشاهده آموزش‌های پایه",
+        bio: "مشاهده ویدیوهای مقدماتی کانال و ارجاع به ساخت چند عکس ساده با پرامپت فارسی.",
+        nextAction: "پایش ارسال اولین تمرین عملی در گروه",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "Gemini"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست پرامپت فارسی", path: "media/khadem_038/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_042",
+        name: "ع پ",
+        code: "خادم 042",
+        rubikaName: "خادم 042 ع پ",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "اصفهان",
+        age: "۳۱",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "تلاش روی قصه‌های بانک",
+        bio: "اعلام وضعیت «در تلاشیم» و هدایت به انتخاب سناریوهای آماده مهدوی.",
+        nextAction: "پیگیری وضعیت پیشرفت کار تصویری",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست کادر مهدوی", path: "media/khadem_042/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_049",
+        name: "کوثر درزی",
+        code: "خادم 049",
+        rubikaName: "خادم 049 کوثر درزی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "قائم‌شهر، مازندران",
+        age: "۲۵",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "دریافت سناریوی آماده",
+        bio: "هدایت به عدم اتلاف وقت روی Google Flow و استفاده مستقیم از مرورگر Tor و Vidu برای متحرک‌سازی.",
+        nextAction: "تولید تصاویر سناریو در DeepSeek و متحرک‌سازی در Vidu",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["DeepSeek", "Tor Browser", "Vidu"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی سناریو", path: "media/khadem_049/art.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_063",
+        name: "مرضیه فرامرزی",
+        code: "خادم 063",
+        rubikaName: "خادم 063 مرضیه فرامرزی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "مرودشت، فارس",
+        age: "۳۹",
+        phone: "۰۹۱۷xxxxxxx",
+        statusBadge: "مطالعه قصه‌های مهدوی",
+        bio: "در حال بررسی و انتخاب داستان دلنشین از بانک قصه‌ها با آرامش کامل جهت شروع تصویرسازی.",
+        nextAction: "کمک در استخراج پرامپت از قصه انتخابی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "پرامپت قصه", path: "media/khadem_063/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_055",
+        name: "سعیده امیدی‌فر",
+        code: "خادم 055",
+        rubikaName: "خادم 055 سعیده امیدی فر",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "ملایر، همدان",
+        age: "۳۲",
+        phone: "۰۹۱۸xxxxxxx",
+        statusBadge: "دانشجوی طرح ولایت",
+        bio: "همت عالی در کنار مادری و تحصیل در طرح ولایت؛ رفع نگرانی درباره پیچیدگی اصطلاحات و شروع بدون فشار.",
+        nextAction: "ساخت اولین تصویر ساده مهدوی در وب",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["DeepSeek", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کانسپت مهدوی", path: "media/khadem_055/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_119",
+        name: "آرزو ابرازی",
+        code: "خادم 119",
+        rubikaName: "خادم 119 آرزو ابرازی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "تهران",
+        age: "۲۸",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "آماده ساخت عکس",
+        bio: "مشاهده اولین آموزش ویدیویی کانال؛ آماده‌سازی مقدمات برای تولید نخستین تمرین.",
+        nextAction: "ارسال سوژه از بانک داستان‌های مهدوی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر تست", path: "media/khadem_119/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_007",
+        name: "فهیمه محمدی",
+        code: "خادم 007",
+        rubikaName: "خادم 007 فهیمه محمدی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "قزوین",
+        age: "۳۸",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "شروع با گام خرد ۱۰ دقیقه‌ای",
+        bio: "اشتیاق بسیار بالا؛ شکستن کمال‌گرایی با پیشنهاد اختصاص زمان کوتاه روزانه برای مشاهده آموزش اول.",
+        nextAction: "پیگیری مشاهده ویدیوی اول کانال",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کادر گل نرگس", path: "media/khadem_007/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_029",
+        name: "معصومه سادات عقیلی",
+        code: "خادم 029",
+        rubikaName: "خادم 029 معصومه سادات عقیلی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "گرگان، گلستان",
+        age: "۳۴",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "عضویت در گروه رفع اشکال",
+        bio: "اعلام «سعی خودم رو می‌کنم»؛ هدایت به گروه سبب جهت برطرف کردن خطاهای اولیه ورود به سایت‌ها.",
+        nextAction: "همراهی در برداشتن گام اول تولید تصویر",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست ورود به سایت", path: "media/khadem_029/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_111",
+        name: "مهدی عسکری‌نژاد",
+        code: "خادم 111",
+        rubikaName: "خادم 111 مهدی عسکری نژاد",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "بافت، کرمان",
+        age: "۳۶",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "نصب ابزارها روی ویندوز",
+        bio: "دریافت راهنمای نصب مرورگر Tor روی رایانه و اشتراک تجربه Everypixel در گروه خادمان سبب.",
+        nextAction: "آغاز ساخت اولین پروژه روایی مهدوی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["Tor Browser", "Everypixel", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "اسکرین‌شات ابزار", path: "media/khadem_111/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_162",
+        name: "فاطمه کریمی",
+        code: "خادم 162",
+        rubikaName: "خادم 162 فاطمه کریمی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "گرگان، گلستان",
+        age: "۲۶",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "مشاهده قسمت اول آموزش",
+        bio: "مشاهده کامل آموزش قسمت اول و دریافت راهنمای اختصاصی رفع خطای باز نشدن قسمت دوم.",
+        nextAction: "شروع تمرین تولید کاراکتر در چت‌جی‌پی‌تی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تمرین تصویری ۱", path: "media/khadem_162/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_183",
+        name: "زینب‌خاتون رحیمی",
+        code: "خادم 183",
+        rubikaName: "خادم 183 زینب خاتون رحیمی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "گرگان، گلستان",
+        age: "۵۰",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "ساخت تصویر در چت‌جی‌پی‌تی",
+        bio: "همت عالی در سن ۵۰ سالگی؛ تولید تصاویر با چت‌جی‌پی‌تی و راهنمایی درباره تفاوت ابزار تصویرساز با انیماتور Vidu.",
+        nextAction: "متحرک کردن عکس تولیدی در سایت Vidu",
+        videosCount: 0,
+        imagesCount: 2,
+        tools: ["ChatGPT", "Vidu"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر ساخته‌شده با GPT", path: "media/khadem_183/art1.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" },
+          { title: "اسکرین‌شات محیط برنامه", path: "media/khadem_183/chat.jpg", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_157",
+        name: "صدیقه کاتبی",
+        code: "خادم 157",
+        rubikaName: "خادم 157 صدیقه کاتبی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "گرگان، گلستان",
+        age: "۴۸",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "رفع خطای کلیک‌پذیری لینک",
+        bio: "رفع مشکل باز نشدن لینک با آموزش کپی در پیام‌های ذخیره‌شده و ورود موفق به کانال‌های سبب و بانک داستان.",
+        nextAction: "مشاهده ویدیوی آموزشی اول و تمرین پرامپت",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["Rubika", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "اسکرین‌شات چت روبیکا", path: "media/khadem_157/screen.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_093",
+        name: "آزاده ملک",
+        code: "خادم 093",
+        rubikaName: "خادم 093 آزاده ملک",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "تهران",
+        age: "۳۱",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "بررسی فنی مرورگر گوشی",
+        bio: "در حال بررسی و تفکیک خطای باز نشدن لینک کانال با راهنمای پشتیبانی در چت دوطرفه.",
+        nextAction: "تایید ورود به کانال و ارسال تمرین اول",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست کادر اولیه", path: "media/khadem_093/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_105",
+        name: "ریحانه معمارزاده",
+        code: "خادم 105",
+        rubikaName: "خادم 105 ریحانه معمارزاده",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "کرمان",
+        age: "۲۷",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "آمادگی ساخت تصویر",
+        bio: "اعلام آمادگی برای شروع ساخت نخستین تصویر مهدوی پس از مشاهده آموزش‌های تحت وب.",
+        nextAction: "ارسال سوژه پیشنهادی از کتاب فرزند خورشید",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["DeepSeek", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی کادر امید", path: "media/khadem_105/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_106",
+        name: "زهرا صیدپور",
+        code: "خادم 106",
+        rubikaName: "خادم 106 زهرا صیدپور",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "چرداول، ایلام",
+        age: "۲۹",
+        phone: "۰۹۱۸xxxxxxx",
+        statusBadge: "مشتاق شروع فعالیت",
+        bio: "ابراز علاقه شدید به مشارکت در نذر مهدوی؛ آغاز کار به محض تکمیل دسترسی به سیستم.",
+        nextAction: "پیگیری شروع تمرینات روی ابزارهای بدون فیلترشکن",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست پرامپت", path: "media/khadem_106/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_141",
+        name: "سعیده اماندادی",
+        code: "خادم 141",
+        rubikaName: "خادم 141 سعیده اماندادی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "بم، کرمان",
+        age: "۳۱",
+        phone: "۰۹۳۶xxxxxxx",
+        statusBadge: "عضویت در گروه سبب",
+        bio: "عضویت در گروه خادمان رسانه‌ای و نصب ابزارهای پیشنهادی بدون نشت آی‌پی.",
+        nextAction: "انتخاب قصه از بانک داستان",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کادر مهدوی", path: "media/khadem_141/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_044",
+        name: "الناز خطیب",
+        code: "خادم 044",
+        rubikaName: "خادم 044 الناز خطیب",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "اصفهان",
+        age: "۲۸",
+        phone: "۰۹۱۳xxxxxxx",
+        statusBadge: "شروع با آرامش",
+        bio: "دریافت راهنمای گام‌های اولیه و حذف فشار زمانی جهت تولید متمرکز اثر باکیفیت.",
+        nextAction: "ساخت نخستین تصویر داستانی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر آزمایشی", path: "media/khadem_044/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_34",
+        name: "سید محمدجواد فردوسی",
+        code: "مدرسه دوره اول 34",
+        rubikaName: "سید محمد جواد فردوسی مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "تهران",
+        age: "۲۴",
+        phone: "۰۹۹۰۱۶۰۸۵۶۴",
+        statusBadge: "دریافت کانال VIP و بانک داستان",
+        bio: "درخواست راهنمایی شروع مسیر و دریافت لینک مستقیم کانال VIP و بانک داستان.",
+        nextAction: "پیگیری انتخاب اولین قصه و ساخت تصویر",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "Vidu"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویر صحنه اول", path: "media/madrese_34/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_07",
+        name: "فرحناز قربان‌زاده",
+        code: "مدرسه دوره اول 07",
+        rubikaName: "فرحناز قربانزاده مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "کرج، البرز",
+        age: "۳۱",
+        phone: "۰۹۳۵۵۸۹۵۶۹۲",
+        statusBadge: "رفع مشکل کردیت و فیلتر",
+        bio: "دریافت راهنمای حل مشکل فلو و اعتبار ابزار Vidu از طریق مرورگر Tor.",
+        nextAction: "همراهی در تولید نخستین انیمیشن کوتاه",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["Tor Browser", "Vidu", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست Vidu", path: "media/madrese_07/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_18",
+        name: "فاطمه محمدرضائی",
+        code: "مدرسه دوره اول 18",
+        rubikaName: "مدرسه دوره اول فاطمه محمدرضائی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "قزوین",
+        age: "۳۹",
+        phone: "۰۹۳۹۲۲۸۹۴۶۸",
+        statusBadge: "دریافت راهکارهای جایگزین",
+        bio: "دریافت راهنمای اختصاصی دور دوم جهت تسهیل مسیر با قصه‌های آماده بانک داستان.",
+        nextAction: "پایش برداشتن اولین گام تصویری",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی کادر نذر", path: "media/madrese_18/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_44",
+        name: "مرضیه عباسی",
+        code: "مدرسه دوره اول 44",
+        rubikaName: "مرضیه عباسی مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "ایلام",
+        age: "۱۱",
+        phone: "۰۹۱۸۹۴۳۸۰۳۱",
+        statusBadge: "نوجوان در حال تلاش",
+        bio: "نوجوان ۱۱ ساله کوشا؛ همراهی ساده و گام‌به‌گام با ابزارهای ساده متناسب با رده سنی.",
+        nextAction: "تشویق و ارائه سوژه‌های داستانی کودکانه مهدوی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "نقاشی مهدوی هوش مصنوعی", path: "media/madrese_44/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_67",
+        name: "مریم سلمانی مقدم",
+        code: "مدرسه دوره اول 67",
+        rubikaName: "مریم سلمانی مقدم مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "مشهد، خراسان رضوی",
+        age: "۳۴",
+        phone: "۰۹۱۵۸۰۰۲۶۷۱",
+        statusBadge: "در حال تلاش و تمرین",
+        bio: "در حال پیگیری و تمرین منظم آموزش‌ها جهت ساخت نخستین اثر تصویری مهدوی.",
+        nextAction: "پیگیری ارسال اولین تمرین تصویری",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تمرین طراحی صحنه", path: "media/madrese_67/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_21",
+        name: "معصومه مرادی",
+        code: "مدرسه دوره اول 21",
+        rubikaName: "معصومه مرادی مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "تهران",
+        age: "۲۹",
+        phone: "۰۹۹۶۲۹۱۸۵۷۶",
+        statusBadge: "دریافت برنامه گام خرد ۱۵ دقیقه‌ای",
+        bio: "رفع عذاب وجدان ضیق وقت؛ دریافت پیام آرامش‌بخش و پیشنهاد مشاهده ویدیوی کوتاه در اوقات فراغت.",
+        nextAction: "مشاهده نخستین ویدیوی آموزشی کانال",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی کادر اولیه", path: "media/madrese_21/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_17",
+        name: "تینا تقوایی",
+        code: "مدرسه دوره اول 17",
+        rubikaName: "تینا تقوایی مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "قزوین",
+        age: "۱۳",
+        phone: "۰۹۳۶۵۲۹۲۶۲۱",
+        statusBadge: "نوجوان / رفع اشکال VPN",
+        bio: "نوجوان ۱۳ ساله؛ پیگیری مشکل فیلترشکن و دعوت به استفاده از ابزارهای داخلی و مرورگر Tor.",
+        nextAction: "تولید اولین تصویر با راهنمایی مربی در گروه",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "Tor Browser"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویرسازی نوجوانانه", path: "media/madrese_17/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_57",
+        name: "نجمه خسروپور",
+        code: "مدرسه دوره اول 57",
+        rubikaName: "نجمه خسروپور مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "مشهد، خراسان رضوی",
+        age: "۲۸",
+        phone: "۰۹۰۳۱۳۰۷۱۷۷",
+        statusBadge: "رفع مشکل لاگین در گروه",
+        bio: "حل مشکل ورود به سایت‌های هوش مصنوعی با کمک منتورهای گروه سبب و آغاز تست پرامپت‌ها.",
+        nextAction: "ارسال خروجی پرامپت تست",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست پرامپت مشهد", path: "media/madrese_57/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "madrese_32",
+        name: "سمیه یعقوبی",
+        code: "مدرسه دوره اول 32",
+        rubikaName: "سمیه یعقوبی مدرسه دوره اول",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "زنجان",
+        age: "۳۸",
+        phone: "۰۹۱۹۳۴۲۱۲۷۲",
+        statusBadge: "رفع اشکال فیلترشکن",
+        bio: "راهنمایی جهت رفع اشکال اتصال و استفاده از ابزارهای سبک تحت وب بدون نیاز به هزینه.",
+        nextAction: "شروع تمرین با قصه‌های بانک داستان",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تست صحنه", path: "media/madrese_32/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_191",
+        name: "مریم نبوی",
+        code: "خادم 191",
+        rubikaName: "خادم 191 مریم نبوی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "تهران",
+        age: "۴۰",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "ثبت‌نام جدید (۵ آبان)",
+        bio: "ثبت‌نام جدید در فایل رسمی؛ دریافت پیام خوش‌آمدگویی، لینک کانال VIP و معرفی گام اول.",
+        nextAction: "پایش پاسخ اولیه و هدایت به بانک داستان",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "پرامپت اولیه", path: "media/khadem_191/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_192",
+        name: "مهدیه سادات سجادی",
+        code: "خادم 192",
+        rubikaName: "خادم 192 مهدیه سادات سجادی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "قم",
+        age: "۲۰",
+        phone: "۰۹۱۲xxxxxxx",
+        statusBadge: "ثبت‌نام جدید (۶ آبان)",
+        bio: "ثبت‌نام جدید؛ دریافت پیام خوش‌آمدگویی اختصاصی و دعوت به مشاهده ویدیوی آموزشی اول.",
+        nextAction: "ارسال سوژه پیشنهادی مناسب سن ۲۰ سال",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["DeepSeek", "ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی کادر جمکران", path: "media/khadem_192/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_193",
+        name: "حمید جعفری",
+        code: "خادم 193",
+        rubikaName: "خادم 193 حمیدجعفری",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "کبودرآهنگ، همدان",
+        age: "۴۱",
+        phone: "۰۹۱۸xxxxxxx",
+        statusBadge: "ثبت‌نام جدید (۷ آبان)",
+        bio: "ثبت‌نام جدید؛ دریافت پیام شروع دوره و معرفی ابزارهای تحت وب هوش مصنوعی.",
+        nextAction: "پیگیری شروع تمرینات اول",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "کادر تست", path: "media/khadem_193/art.jpg", url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_194",
+        name: "مرضیه خسروجردی",
+        code: "خادم 194",
+        rubikaName: "خادم 194 مرضیه خسروجردی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "گرگان، گلستان",
+        age: "۴۲",
+        phone: "۰۹۱۱xxxxxxx",
+        statusBadge: "ثبت‌نام جدید (۷ آبان)",
+        bio: "ثبت‌نام جدید؛ دعوت به گروه سبب جهت آشنایی با خادمان فعال و مشاهده آثار برگزیده.",
+        nextAction: "پایش ورود به گروه و رفع ابهامات اولیه",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "Gemini"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "تصویرسازی اولیه", path: "media/khadem_194/art.jpg", url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: "khadem_195",
+        name: "زهرا گلشنی",
+        code: "خادم 195",
+        rubikaName: "خادم 195 زهرا گلشنی",
+        level: 1,
+        levelTitle: "مهدی‌یار سطح ۱ (رهپوی سبب)",
+        city: "سبزوار و مشهد",
+        age: "۲۱",
+        phone: "۰۹۱۵xxxxxxx",
+        statusBadge: "ثبت‌نام جدید (۸ آبان)",
+        bio: "ثبت‌نام جدید در آخرین روز ورودی‌ها؛ دریافت پیام شروع و هدایت به بانک داستان.",
+        nextAction: "پیگیری دریافت نخستین تصویر از سناریوی انتخابی",
+        videosCount: 0,
+        imagesCount: 1,
+        tools: ["ChatGPT", "DeepSeek"],
+        githubPath: "",
+        videoUrl: "",
+        images: [
+          { title: "طراحی کادر خورشید", path: "media/khadem_195/art.jpg", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" }
+        ]
+      }
+    ];
+
+    let currentSearchTerm = '';
+    let currentSelectedLevel = 'all';
+
+    // تابع اصلی رندر کارت‌ها با تضمین عدم استفاده از تصویر پس‌زمینه
+    function renderCards() {
+      const l3Grid = document.getElementById('grid-level-3');
+      const l2Grid = document.getElementById('grid-level-2');
+      const l1Grid = document.getElementById('grid-level-1');
+      const noResults = document.getElementById('no-results');
+
+      l3Grid.innerHTML = '';
+      l2Grid.innerHTML = '';
+      l1Grid.innerHTML = '';
+
+      const filtered = khademanData.filter(user => {
+        const matchesLevel = (currentSelectedLevel === 'all') || (user.level === parseInt(currentSelectedLevel));
+        const term = currentSearchTerm.toLowerCase();
+        const matchesSearch = !term || (
+          user.name.toLowerCase().includes(term) ||
+          user.code.toLowerCase().includes(term) ||
+          user.city.toLowerCase().includes(term) ||
+          user.bio.toLowerCase().includes(term) ||
+          user.tools.some(t => t.toLowerCase().includes(term))
+        );
+        return matchesLevel && matchesSearch;
+      });
+
+      const l3Items = filtered.filter(u => u.level === 3);
+      const l2Items = filtered.filter(u => u.level === 2);
+      const l1Items = filtered.filter(u => u.level === 1);
+
+      document.getElementById('count-level-3').textContent = l3Items.length;
+      document.getElementById('count-level-2').textContent = l2Items.length;
+      document.getElementById('count-level-1').textContent = l1Items.length;
+
+      document.getElementById('level3').classList.toggle('hidden', l3Items.length === 0);
+      document.getElementById('level2').classList.toggle('hidden', l2Items.length === 0);
+      document.getElementById('level1').classList.toggle('hidden', l1Items.length === 0);
+
+      if (filtered.length === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+
+      l3Items.forEach(u => l3Grid.appendChild(createCleanCardElement(u)));
+      l2Items.forEach(u => l2Grid.appendChild(createCleanCardElement(u)));
+      l1Items.forEach(u => l1Grid.appendChild(createCleanCardElement(u)));
+    }
+
+    // طراحی کارت تمیز، تایپوگرافی‌محور، بدون تصویر پس‌زمینه
+    function createCleanCardElement(user) {
+      const card = document.createElement('div');
+      
+      // رنگ‌بندی و هویت بصری متناسب با هر سطح مهدوی
+      let borderColor = "border-slate-200/90 hover:border-amber-400";
+      let badgeBg = "bg-amber-50 text-amber-900 border-amber-300";
+      let avatarBg = "from-amber-500 to-amber-600 text-white";
+      let levelLabel = "🎬 راوی ظهور (سطح ۳)";
+
+      if (user.level === 2) {
+        borderColor = "border-slate-200/90 hover:border-teal-400";
+        badgeBg = "bg-teal-50 text-teal-900 border-teal-300";
+        avatarBg = "from-teal-600 to-emerald-700 text-white";
+        levelLabel = "🎨 نگارگر عهد (سطح ۲)";
+      } else if (user.level === 1) {
+        borderColor = "border-slate-200/90 hover:border-emerald-400";
+        badgeBg = "bg-emerald-50 text-emerald-900 border-emerald-300";
+        avatarBg = "from-emerald-700 to-teal-800 text-white";
+        levelLabel = "🌿 رهپوی سبب (سطح ۱)";
+      }
+
+      card.className = `bg-white rounded-2xl border ${borderColor} p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer`;
+      card.onclick = () => openModal(user.id);
+
+      // تولید بج‌های ابزارهای استفاده‌شده
+      const toolsHtml = user.tools.map(t => 
+        `<span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">${t}</span>`
+      ).join('');
+
+      card.innerHTML = `
+        <div class="space-y-3.5">
+          
+          <!-- سربرگ کارت: آواتار متنی، نام و کد خادم -->
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-br ${avatarBg} font-black text-base flex items-center justify-center shadow-sm shrink-0">
+                ${user.name.charAt(0)}
+              </div>
+              <div>
+                <h3 class="text-base font-extrabold text-slate-900 group-hover:text-emerald-800 transition">${user.name}</h3>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
+                  <span>📍 ${user.city}</span>
+                  <span>•</span>
+                  <span>${user.age} ساله</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- کد شناسایی خادم -->
+            <span class="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200 shrink-0">
+              ${user.code}
+            </span>
+          </div>
+
+          <!-- بج سطح مهدوی -->
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-[11px] font-bold border ${badgeBg}">
+              ${levelLabel}
+            </span>
+            <span class="text-[11px] font-bold text-slate-500 truncate">${user.statusBadge}</span>
+          </div>
+
+          <!-- متن شرح وضعیت و سوابق -->
+          <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+            ${user.bio}
+          </p>
+
+          <!-- تگ‌های ابزارها -->
+          <div class="flex flex-wrap items-center gap-1 pt-1">
+            ${toolsHtml}
+          </div>
+
+        </div>
+
+        <!-- پابرگ کارت: شمارنده‌های مدیا و دکمه ورود به پرونده -->
+        <div class="pt-4 mt-3 border-t border-slate-100 flex items-center justify-between">
+          <div class="flex items-center gap-1.5 text-[11px] font-bold">
+            ${user.videosCount > 0 ? 
+              `<span class="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200">🎬 ${user.videosCount} ویدئو</span>` : 
+              `<span class="px-2 py-0.5 rounded-md bg-slate-50 text-slate-400">بدون ویدئو</span>`
+            }
+            <span class="px-2 py-0.5 rounded-md ${user.imagesCount > 0 ? 'bg-teal-50 text-teal-800 border border-teal-200' : 'bg-slate-50 text-slate-400'}">
+              🖼️ ${user.imagesCount} تصویر
+            </span>
+          </div>
+
+          <!-- دکمه اقدام -->
+          <span class="text-xs font-bold text-teal-700 group-hover:text-emerald-800 flex items-center gap-1 transition">
+            <span>مشاهده پرونده و آثار</span>
+            <svg class="w-3.5 h-3.5 transform group-hover:-translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </span>
+        </div>
+      `;
+
+      return card;
+    }
+
+    // باز کردن مدال جزئیات و مدیا
+    function openModal(userId) {
+      const user = khademanData.find(u => u.id === userId);
+      if (!user) return;
+
+      document.getElementById('modalUserName').textContent = user.name;
+      document.getElementById('modalUserCode').textContent = user.code;
+      document.getElementById('modalUserLevelTitle').textContent = user.levelTitle;
+      document.getElementById('modalUserAvatar').textContent = user.name.charAt(0);
+      document.getElementById('modalCity').textContent = user.city;
+      document.getElementById('modalAge').textContent = `${user.age} سال`;
+      
+      const phoneLink = document.getElementById('modalPhoneLink');
+      phoneLink.textContent = user.phone;
+      phoneLink.href = `tel:${user.phone.replace(/[^0-9]/g, '')}`;
+
+      document.getElementById('modalRubikaName').textContent = user.rubikaName;
+      document.getElementById('modalStatusBadge').textContent = user.statusBadge;
+      document.getElementById('modalBio').textContent = user.bio;
+      document.getElementById('modalNextAction').textContent = user.nextAction;
+
+      // ابزارها
+      const toolsContainer = document.getElementById('modalToolsContainer');
+      toolsContainer.innerHTML = user.tools.map(t => 
+        `<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">${t}</span>`
+      ).join('');
+
+      // پلیر ویدئو
+      const videoSection = document.getElementById('modalVideoSection');
+      const noVideoNotice = document.getElementById('modalNoVideoNotice');
+      const videoPlayer = document.getElementById('modalVideoPlayer');
+      const videoSource = document.getElementById('modalVideoSource');
+      const videoPath = document.getElementById('modalVideoPath');
+      const videoDirectLink = document.getElementById('modalVideoDirectLink');
+      const videoBadge = document.getElementById('modalVideoBadge');
+
+      if (user.videosCount > 0 && user.videoUrl) {
+        videoSection.classList.remove('hidden');
+        noVideoNotice.classList.add('hidden');
+        videoBadge.textContent = `${user.videosCount} اثر ویدیویی`;
+        videoSource.src = user.videoUrl;
+        videoPath.textContent = user.githubPath || `media/${user.id}/video1.mp4`;
+        videoDirectLink.href = user.videoUrl;
+        videoPlayer.load();
+      } else {
+        videoSection.classList.add('hidden');
+        noVideoNotice.classList.remove('hidden');
+        videoPlayer.pause();
+      }
+
+      // گالری تصاویر
+      const imageGrid = document.getElementById('modalImageGrid');
+      const imageBadge = document.getElementById('modalImageBadge');
+      imageGrid.innerHTML = '';
+      imageBadge.textContent = `${user.imagesCount} تصویر`;
+
+      if (user.images && user.images.length > 0) {
+        user.images.forEach((img) => {
+          const imgCard = document.createElement('div');
+          imgCard.className = "group relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200 cursor-pointer shadow-sm hover:shadow-md transition";
+          imgCard.onclick = () => openLightbox(img.url, img.title, img.path);
+          imgCard.innerHTML = `
+            <img src="${img.url}" alt="${img.title}" class="w-full h-28 object-cover group-hover:scale-105 transition duration-300">
+            <div class="p-1.5 bg-white text-[11px] font-bold text-slate-800 truncate border-t border-slate-100">
+              ${img.title}
+            </div>
+            <div class="px-1.5 pb-1 bg-white text-[9px] text-teal-600 font-mono truncate select-all">
+              ${img.path}
+            </div>
+          `;
+          imageGrid.appendChild(imgCard);
+        });
+      }
+
+      const modal = document.getElementById('userModal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('userModal');
+      const videoPlayer = document.getElementById('modalVideoPlayer');
+      if (videoPlayer) videoPlayer.pause();
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('userModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // کپی مسیر گیت‌هاب ویدیو
+    function copyGithubPath() {
+      const path = document.getElementById('modalVideoPath').textContent;
+      copyTextToClipboard(path, 'مسیر فایل گیت‌هاب کپی شد');
+    }
+
+    // کپی شماره همراه
+    function copyPhone() {
+      const phone = document.getElementById('modalPhoneLink').textContent;
+      copyTextToClipboard(phone, 'شماره همراه خادم کپی شد');
+    }
+
+    function copyTextToClipboard(text, successMsg) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (err) {
+        showToast('خطا در کپی متن');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    // جستجوی زنده
+    function handleSearch(query) {
+      currentSearchTerm = query.trim();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (currentSearchTerm.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderCards();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      handleSearch('');
+    }
+
+    // فیلتر سریع بر اساس سطح
+    function filterByLevel(level) {
+      currentSelectedLevel = level;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-800', 'text-white');
+        btn.classList.add('bg-slate-50', 'text-slate-700');
+      });
+
+      const activeBtnMap = {
+        'all': 'btn-all',
+        3: 'btn-lvl3',
+        2: 'btn-lvl2',
+        1: 'btn-lvl1'
+      };
+      const activeBtn = document.getElementById(activeBtnMap[level]);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-emerald-800', 'text-white');
+      }
+
+      renderCards();
+    }
+
+    // لایت‌باکس عکس
+    function openLightbox(url, title, path) {
+      document.getElementById('lightboxImg').src = url;
+      document.getElementById('lightboxCaption').textContent = title;
+      document.getElementById('lightboxPath').textContent = `مسیر در گیت‌هاب: ${path}`;
+      document.getElementById('imageLightbox').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('imageLightbox').classList.add('hidden');
+    }
+
+    // پنجره‌های راکد و معلق
+    function openIdleModal() {
+      document.getElementById('idleModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeIdleModal() {
+      document.getElementById('idleModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    document.getElementById('idleModal').addEventListener('click', function(e) {
+      if (e.target === this) closeIdleModal();
+    });
+
+    function openArchivedModal() {
+      document.getElementById('archivedModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeArchivedModal() {
+      document.getElementById('archivedModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    document.getElementById('archivedModal').addEventListener('click', function(e) {
+      if (e.target === this) closeArchivedModal();
+    });
+
+    // بستن مدال‌ها با دکمه Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeIdleModal();
+        closeArchivedModal();
+        closeLightbox();
+      }
+    });
+
+    // اعلان توست
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // راه‌اندازی اولیه
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCards();
+    });
+  </script>
+</body>
+</html>
